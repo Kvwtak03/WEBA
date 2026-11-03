@@ -2,7 +2,7 @@
   <div class="position-sticky pt-3 sidebar-sticky">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a href="index.php?page=dashboard" class="nav-link <?php echo $page == 'dashboard' ? 'active' : 'link-dark'; ?>">
+        <a href="?url=dashboard" class="nav-link <?php echo $page == 'dashboard' ? 'active' : 'link-dark'; ?>">
           <span class="icon">
             <i class="bi bi-easel"></i>
           </span>
@@ -26,7 +26,7 @@
         </a>
       </li>
       <li>
-        <a href="index.php?page=users" class="nav-link <?php echo $page == 'users' ? 'active' : 'link-dark'; ?>">
+        <a href="?url=users" class="nav-link <?php echo $page == 'users' ? 'active' : 'link-dark'; ?>">
           <span class="icon">
             <i class="bi bi-person-circle"></i>
           </span>

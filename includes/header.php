@@ -40,7 +40,7 @@
 
         <div class="navbar-nav">
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="index.php?action=logout">logout</a>
+            <a class="nav-link px-3" href="?url=logout">logout</a>
         </div>
         </div>
     </header>

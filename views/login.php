@@ -10,7 +10,7 @@
   <div class="card p-4 shadow-sm" style="width: 300px;">
     <h1 class="h3 mb-3 fw-normal text-center">Přihlášení</h1>
     
-    <form action="index.php" method="POST">
+    <form action="index.php?url=login" method="POST">
       <div class="mb-3">
         <input type="email" name="email" class="form-control" placeholder="E-mailová adresa" required>
       </div>

@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. PRAVIDLO PRO API: Pokud adresa začíná na "api/", pošli to do api.php
+RewriteRule ^api/(.*)$ api.php?url=$1 [QSA,L]
+
+# 2. PRAVIDLA PRO MVC
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
