@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+  <script src="./js/admin.js" defer></script>
   <title>Simple Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,3 +48,5 @@
     </header>
     <div class="container-fluid">
     <div class="row">
+
+
