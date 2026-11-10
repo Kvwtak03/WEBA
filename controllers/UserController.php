@@ -15,6 +15,13 @@ class UserController extends BaseController{
             $id = $_POST['id'];
             $this->userModel->deleteUser($id); 
             
+            //Pokud je požadavek z AJAXu, pošleme jen čistý JSON potvrzující úspěch a skončíme
+            if (isset($_POST['is_ajax'])) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit; // Zastavíme další běh, nechceme generovat HTML!
+            }
+            
             header("Location: index.php?url=users&success=1");
             exit;
         }

@@ -3,7 +3,7 @@ session_start();
 
 
 header("Access-Control-Allow-Origin: *");           // Povolení CORS pro volání z jiných domén
-header("Content-Type: text/csv; charset=UTF-8");        // Říkáme prohlížeči: "Tohle není HTML, ale CSV dokument"
+header("Content-Type: application/json; charset=UTF-8");        // Říkáme prohlížeči: "Očekávej moderní strojová data ve formátu JSON"
 
 if (!isset($_SESSION['api_users'])) {       //testovací data
     $_SESSION['api_users'] = [
@@ -20,43 +20,20 @@ $id = $urlParts[1] ?? null;                 // ID uživatele
 $method = $_SERVER['REQUEST_METHOD'];           // Zjistíme HTTP metodu (GET nebo POST)
 
 
-function outputCSV($data) {
-    
-    $output = fopen("php://output", "w");           // Předvyplníme si pár uživatelů, ať máme co testovat
-    
-    fputcsv($output, ['id', 'name', 'surname']);        // Zapíšeme hlavičku CSV tabulky
-    
-    if (empty($data)) {
-        fclose($output);
-        exit;
-    }
-    
-    // Pokud posíláme jen 1 uživatele, nemá v sobě další pole, tak musíme poznat rozdíl
-    if (isset($data['id'])) {
-        fputcsv($output, [$data['id'], $data['name'], $data['surname']]);
-    } else {
-        // Pokud je uživatelů víc, projdeme je cyklem
-        foreach ($data as $user) {
-            fputcsv($output, [$user['id'], $user['name'], $user['surname']]);
-        }
-    }
-    
-    fclose($output);
-    exit; // Ihned ukončíme skript, aby se nepřidaly žádné prázdné znaky
-}
-
 if ($endpoint === 'get' && $id === null) {
     // Vstupní bod: get - vrátí seznam všech uživatelů
-    outputCSV($_SESSION['api_users']);
+    echo json_encode(array_values($_SESSION['api_users']));     // Používáme array_values, abychom z asociativního pole udělali čisté indexované pole pro JavaScript
+    exit;
     
 } elseif ($endpoint === 'get' && $id !== null) {
     // Vstupní bod: get/id - vrátí uživatele s daným id
     if (isset($_SESSION['api_users'][$id])) {
-        outputCSV($_SESSION['api_users'][$id]);
+        echo json_encode($_SESSION['api_users'][$id]);
     } else {
         http_response_code(404);         // Kód 404 Not Found
-        echo "id,name,surname\nchyba,uzivatel,nenalezen";
+       echo json_encode(['error' => 'Uživatel nenalezen']);
     }
+    exit;
     
 } elseif ($endpoint === 'post' && $method === 'POST') {
     // Vstupní bod: post - uloží uživatele (data z HTTP POST)
@@ -68,8 +45,9 @@ if ($endpoint === 'get' && $id === null) {
             'surname' => $_POST['surname'] ?? ''
         ];
         http_response_code(201); // Kód 201 Created
-        echo "id,name,surname\n$newId,uspesne,vytvoren";
+        echo json_encode(['success' => true, 'message' => 'Uživatel vytvořen', 'id' => $newId]);
     }
+    exit;
     
 } elseif ($endpoint === 'update' && $id !== null && $method === 'POST') {
     // Vstupní bod: update/id - změní uživatele s daným id (data z HTTP POST)
@@ -79,23 +57,27 @@ if ($endpoint === 'get' && $id === null) {
         $_SESSION['api_users'][$id]['surname'] = $_POST['surname'] ?? $_SESSION['api_users'][$id]['surname'];
         
         http_response_code(200); // 200 OK
-        echo "id,name,surname\n$id,uspesne,upraven";
+        echo json_encode(['success' => true, 'message' => 'Uživatel upraven', 'id' => $id]);
     } else {
         http_response_code(404);
+        echo json_encode(['error' => 'Uživatel nenalezen']);
     }
+    exit;
     
 } elseif ($endpoint === 'delete' && $id !== null) {
     // Vstupní bod: delete/id - smaže uživatele s daným id
     if (isset($_SESSION['api_users'][$id])) {
         unset($_SESSION['api_users'][$id]); // Vymazání ze session
         http_response_code(200);
-        echo "id,name,surname\n$id,uspesne,smazan";
+        echo json_encode(['success' => true, 'message' => 'Uživatel smazán', 'id' => $id]);
     } else {
         http_response_code(404);
+        echo json_encode(['error' => 'Uživatel nenalezen']);
     }
     
 } else {
     // Chyták pro neplatné adresy
     http_response_code(400); // 400 Bad Request
-    echo "Neznamy nebo nepodporovany API pozadavek.";
+    echo json_encode(['error' => 'Neznamy nebo nepodporovany API pozadavek.']);
+    exit;
 }

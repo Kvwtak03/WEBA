@@ -27,6 +27,12 @@ switch ($page) {                        //switch rozhodce, co se má stát
         $userController = new UserController($userModel);       // Vytvoříme Controller a předáme mu Model
         $userController->index();                               // Zavoláme hlavní metodu Controlleru pro zobrazení tabulky
         break;
+    
+    case 'others':
+        require_once 'controllers/OthersController.php';
+        $controller = new OthersController();
+        $controller->index();
+        break;
 
     case 'login':
         $auth = new AuthController($pdo);

@@ -18,7 +18,7 @@
         </a>
       </li>
       <li>
-        <a href="index.php?page=others" class="nav-link <?php echo $page == 'others' ? 'active' : 'link-dark'; ?>">
+        <a href="?url=others" class="nav-link <?php echo $page == 'others' ? 'active' : 'link-dark'; ?>">
           <span class="icon">
             <i class="bi bi-box"></i>
           </span>
