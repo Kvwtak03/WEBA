@@ -9,7 +9,7 @@
           Dashboard
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="index.php?page=items" class="nav-link <?php echo $page == 'items' ? 'active' : 'link-dark'; ?>">
           <span class="icon">
             <i class="bi bi-card-list"></i>

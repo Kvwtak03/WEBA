@@ -14,3 +14,10 @@
         </li>
     </ul>
 </div>
+
+
+<hr class="my-5">
+
+<h2 class="mb-4">React Komponenta: Panel s tlačítky</h2>
+<!-- ZÁCHYTNÝ BOD PRO REACT: Sem ReactDOM.createRoot() vstříkne naši aplikaci -->
+<div id="root"></div>

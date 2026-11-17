@@ -4,6 +4,12 @@
 <head>
   <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
   <script src="./js/admin.js" defer></script>
+  <!--  Knihovny pro běh Reactu a překladač Babel -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!--  Náš oddělený soubor pro React (důležitý je type="text/babel") -->
+  <script type="text/babel" src="./js/react-panels.js" defer></script>
   <title>Simple Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
